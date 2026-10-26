@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windipi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafc;
+      color: #1e1e2f;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* header */
+    .header {
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; }
+    .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; color: #0b2b40; text-decoration: none; }
+    .logo span { color: #2d7a9b; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: #2d3e50; font-weight: 500; font-size: 1rem; transition: color 0.2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background-color: #2d7a9b; transition: width 0.25s ease; }
+    .nav-links a:hover { color: #1e6f8f; }
+    .nav-links a:hover::after { width: 100%; }
+    .mobile-toggle { display: none; font-size: 1.8rem; background: none; border: none; color: #0b2b40; cursor: pointer; }
+
+    /* buttons */
+    .btn {
+      display: inline-block; background: #1e6f8f; color: #ffffff;
+      padding: 14px 34px; border-radius: 50px; font-weight: 600; text-decoration: none;
+      transition: all 0.2s; border: 1px solid transparent;
+      box-shadow: 0 8px 18px -6px rgba(30, 111, 143, 0.3);
+    }
+    .btn:hover { background: #155b75; transform: translateY(-2px); box-shadow: 0 14px 24px -8px rgba(30, 111, 143, 0.4); }
+    .btn-outline { background: transparent; color: #1e6f8f; border: 1.5px solid #1e6f8f; box-shadow: none; }
+    .btn-outline:hover { background: #e9f1f5; transform: translateY(-2px); box-shadow: 0 8px 18px -8px rgba(30, 111, 143, 0.2); }
+
+    /* hero */
+    .hero { padding: 80px 0 90px; display: flex; align-items: center; gap: 50px; }
+    .hero-content { flex: 1; }
+    .hero-badge {
+      display: inline-block; background: #e1f0f7; color: #1e6f8f;
+      font-weight: 600; font-size: 0.85rem; padding: 6px 18px; border-radius: 40px;
+      letter-spacing: 0.3px; margin-bottom: 24px; text-transform: uppercase;
+    }
+    .hero-content h1 { font-size: 3.3rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.03em; color: #0b2b40; margin-bottom: 24px; }
+    .hero-highlight { color: #1e6f8f; border-bottom: 3px solid #acd4e6; }
+    .hero-content p { font-size: 1.15rem; color: #4b5b6b; max-width: 550px; margin-bottom: 36px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; }
+
+    .hero-visual { flex: 1; display: flex; justify-content: center; align-items: center; }
+    .visual-card {
+      background: linear-gradient(145deg, #ffffff, #edf4f9);
+      border-radius: 40px; padding: 40px 30px;
+      box-shadow: 30px 30px 50px -20px rgba(0, 40, 60, 0.15);
+      width: 100%; max-width: 380px; text-align: center;
+    }
+    .visual-card .brand-tag {
+      display: inline-block; background: #0b2b40; color: white;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.6px;
+      padding: 4px 14px; border-radius: 40px; margin-bottom: 20px; text-transform: uppercase;
+    }
+    .visual-card i { font-size: 5rem; color: #1e6f8f; margin-bottom: 18px; opacity: 0.9; display: block; }
+    .visual-card h3 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; color: #0b2b40; }
+    .visual-card p { color: #5f6f7e; font-size: 0.95rem; }
+
+    /* section headings */
+    .section-head { text-align: center; max-width: 700px; margin: 0 auto 60px; }
+    .section-head h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; color: #0b2b40; margin-bottom: 16px; }
+    .section-head p { font-size: 1.1rem; color: #5a6f7e; }
+
+    /* product section */
+    .product { padding: 80px 0; background: #ffffff; }
+    .product-wrapper {
+      display: flex; align-items: center; gap: 60px;
+      background: #f9fafc; border-radius: 42px; padding: 50px;
+      border: 1px solid #ecf3f8;
+    }
+    .product-info { flex: 1; }
+    .product-info .badge {
+      background: #e1f0f7; color: #1e6f8f; display: inline-block;
+      padding: 6px 18px; border-radius: 40px; font-weight: 600;
+      font-size: 0.8rem; letter-spacing: 0.4px; margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .product-info h2 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.02em; color: #0b2b40; margin-bottom: 20px; line-height: 1.2; }
+    .product-info h2 span { color: #1e6f8f; }
+    .product-info p { color: #4e6475; margin-bottom: 18px; font-size: 1.05rem; }
+    .product-features { list-style: none; margin: 26px 0 10px; }
+    .product-features li { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-weight: 500; color: #1e3d4e; }
+    .product-features i { color: #1e6f8f; font-size: 1.1rem; }
+    .product-visual {
+      flex: 1; display: flex; justify-content: center; align-items: center;
+    }
+    .db-card {
+      background: linear-gradient(145deg, #0b2b40, #1b4961);
+      border-radius: 36px; padding: 44px 36px; text-align: center;
+      box-shadow: 0 30px 50px -20px rgba(11, 43, 64, 0.4);
+      width: 100%; max-width: 340px;
+    }
+    .db-card i { font-size: 4.5rem; color: #aad0e3; margin-bottom: 20px; display: block; }
+    .db-card h3 { color: white; font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .db-card p { color: #b8d1e0; font-size: 0.95rem; }
+    .db-card .tagline {
+      margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.8rem; color: #8fb4c9; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+
+    /* about */
+    .about { padding: 80px 0; }
+    .about-wrapper { display: flex; align-items: center; gap: 60px; }
+    .about-text { flex: 1; }
+    .about-text .badge {
+      background: #e1f0f7; color: #1e6f8f; display: inline-block;
+      padding: 6px 18px; border-radius: 40px; font-weight: 600;
+      font-size: 0.8rem; letter-spacing: 0.4px; margin-bottom: 20px;
+    }
+    .about-text h2 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.02em; color: #0b2b40; margin-bottom: 24px; line-height: 1.2; }
+    .about-text p { color: #4e6475; margin-bottom: 18px; font-size: 1.05rem; }
+    .about-list { list-style: none; margin: 30px 0 10px; }
+    .about-list li { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-weight: 500; color: #1e3d4e; }
+    .about-list i { color: #1e6f8f; font-size: 1.2rem; }
+    .about-visual {
+      flex: 1; background: linear-gradient(135deg, #d8e9f2, #eef6fb);
+      padding: 30px; border-radius: 42px; box-shadow: 0 30px 40px -24px rgba(0, 0, 0, 0.2);
+    }
+    .about-card {
+      background: #ffffffd5; backdrop-filter: blur(4px); padding: 36px 30px;
+      border-radius: 28px; color: #1e3b4b; border: 1px solid #ffffff;
+    }
+    .about-card i { color: #1e6f8f; font-size: 2.4rem; margin-bottom: 18px; display: block; }
+    .about-card h4 { font-size: 1.3rem; font-weight: 700; color: #0b2b40; margin-bottom: 12px; }
+    .about-card p { font-size: 1rem; line-height: 1.7; color: #4e6475; }
+
+    /* cta */
+    .cta { padding: 70px 0; background: #ffffff; }
+    .cta-box { background: linear-gradient(135deg, #0b2b40, #1b4961); border-radius: 50px; padding: 60px 40px; text-align: center; color: white; }
+    .cta-box h2 { font-size: 2.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 18px; }
+    .cta-box p { font-size: 1.15rem; max-width: 600px; margin: 0 auto 32px; color: #d6e6f0; }
+    .cta-email {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px dashed rgba(255, 255, 255, 0.35);
+      color: #e9f0f5;
+      padding: 14px 34px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+    }
+    .cta-note {
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: #9bb9cc;
+    }
+
+    /* footer */
+    .footer { background: #0a1e2b; color: #b8cedb; padding: 50px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand h3 { font-size: 1.8rem; font-weight: 700; color: white; margin-bottom: 16px; }
+    .footer-brand h3 span { color: #6baed3; }
+    .footer-brand p { max-width: 300px; font-size: 0.95rem; line-height: 1.7; }
+    .footer-col h4 { color: white; font-weight: 600; margin-bottom: 20px; font-size: 1.05rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a { color: #b8cedb; text-decoration: none; transition: color 0.2s; font-size: 0.95rem; }
+    .footer-col a:hover { color: white; }
+    .footer-email {
+      color: #8fb4c9;
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+    .footer-bottom {
+      border-top: 1px solid #1d3b4b; padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px; font-size: 0.9rem;
+    }
+    .social-links { display: flex; gap: 20px; }
+    .social-links a { color: #b8cedb; font-size: 1.2rem; transition: color 0.2s; }
+    .social-links a:hover { color: white; }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; padding: 50px 0 60px; text-align: center; }
+      .hero-content p { margin-left: auto; margin-right: auto; }
+      .hero-buttons { justify-content: center; }
+      .product-wrapper { flex-direction: column; padding: 36px 26px; }
+      .about-wrapper { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+      .nav-links.active {
+        display: flex; flex-direction: column; position: absolute;
+        top: 80px; left: 0; width: 100%; background: white;
+        padding: 30px 24px; box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
+        gap: 24px; border-radius: 0 0 30px 30px; z-index: 99;
+      }
+      .hero-content h1 { font-size: 2.6rem; }
+    }
+    @media (max-width: 600px) {
+      .hero-content h1 { font-size: 2.2rem; }
+      .section-head h2 { font-size: 2rem; }
+      .cta-box h2 { font-size: 2rem; }
+      .cta-box { padding: 40px 24px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="#" class="logo">Windi<span>pi</span></a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#product">WindPipeDB</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="container hero">
+      <div class="hero-content">
+        <span class="hero-badge"><i class="fas fa-layer-group" style="margin-right: 6px;"></i> Versatile by design</span>
+        <h1>One partner, many directions — meet <span class="hero-highlight">Windipi</span></h1>
+        <p>Windipi is a versatile company built to adapt. We create our own products and shape our work around what actually needs to get done.</p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn">Get in touch</a>
+          <a href="#product" class="btn btn-outline">See WindPipeDB</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="visual-card">
+          <span class="brand-tag">Our product</span>
+          <i class="fas fa-database"></i>
+          <h3>WindPipeDB</h3>
+          <p>A database product built by Windipi — flexible, focused, and made to grow with you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT: WindPipeDB -->
+    <section id="product" class="product">
+      <div class="container">
+        <div class="product-wrapper">
+          <div class="product-info">
+            <span class="badge"><i class="fas fa-database"></i> Our product</span>
+            <h2>Meet <span>WindPipeDB</span></h2>
+            <p>WindPipeDB is our database product — the first of what we build at Windipi. It's designed to be practical, adaptable, and ready to fit into the way you already work.</p>
+            <ul class="product-features">
+              <li><i class="fas fa-check-circle"></i> Built and maintained by Windipi</li>
+              <li><i class="fas fa-check-circle"></i> Flexible enough to grow with your project</li>
+              <li><i class="fas fa-check-circle"></i> Straightforward to set up and use</li>
+              <li><i class="fas fa-check-circle"></i> Direct support from the team who made it</li>
+            </ul>
+          </div>
+          <div class="product-visual">
+            <div class="db-card">
+              <i class="fas fa-database"></i>
+              <h3>WindPipeDB</h3>
+              <p>The database product from Windipi.</p>
+              <div class="tagline">A Windipi product</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT: Windipi the company -->
+    <section id="about" class="about">
+      <div class="container about-wrapper">
+        <div class="about-text">
+          <span class="badge"><i class="fas fa-feather-alt"></i> About Windipi</span>
+          <h2>Versatile by nature, focused on you</h2>
+          <p>Windipi is a new company with a clear belief: good work shouldn't be boxed into one category. We build our own products — starting with WindPipeDB — and stay flexible in how we work with others.</p>
+          <ul class="about-list">
+            <li><i class="fas fa-check-circle"></i> Honest, transparent process</li>
+            <li><i class="fas fa-check-circle"></i> Direct communication — no jargon</li>
+            <li><i class="fas fa-check-circle"></i> A company that adapts, not a rigid agency</li>
+            <li><i class="fas fa-check-circle"></i> Focused on building things that last</li>
+          </ul>
+        </div>
+        <div class="about-visual">
+          <div class="about-card">
+            <i class="fas fa-compass"></i>
+            <h4>Just getting started</h4>
+            <p>We're a young company and proud of it. No legacy bloat, no rigid packages — just a versatile team building products like WindPipeDB and figuring out what comes next, with full attention from day one.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Let's start a conversation</h2>
+          <p>Interested in WindPipeDB or just want to say hello? We'd be glad to hear from you.</p>
+          <div class="cta-email">📧 Email: [unavailable]</div>
+          <p class="cta-note">We're setting up our email — check back soon.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Windi<span>pi</span></h3>
+          <p>A versatile company building our own products. We're just getting started — thanks for being here.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#product">Product</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><span class="footer-email">Email: [unavailable]</span></li>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">Twitter / X</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Windipi. All rights reserved.</span>
+        <div class="social-links">
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (function() {
+      const toggle = document.getElementById('mobileToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      if (toggle && navLinks) {
+        toggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navLinks.classList.toggle('active');
+          const icon = toggle.querySelector('i');
+          if (navLinks.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+          } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            const icon = toggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
+            navLinks.classList.remove('active');
+            const icon = toggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
